@@ -1,12 +1,9 @@
-import requests
 import numpy as np
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import ElementClickInterceptedException
 import time
-
-url = "https://www.centris.ca/en/condos~for-sale~montreal-island?view=Thumbnail&uc=4"
 
 def read_page(response):
     soup = BeautifulSoup(response, "html.parser")
