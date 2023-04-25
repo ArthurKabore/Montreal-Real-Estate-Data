@@ -7,11 +7,10 @@ pd.options.display.max_rows = 9999
 
 df = pd.read_csv('Outputs/dirty_data.csv', sep='delimiter', header=None, engine='python')
 
-df_string = df[0]
-
+df_arrays = df[0]
 clean_list = []
 
-for line in df_string:
+for line in df_arrays:
     line = line.split()
     list_values = []
     city = ""
@@ -93,9 +92,9 @@ for line in df_string:
 df = pd.DataFrame(clean_list, columns = ['City', 'Rooms','Bedrooms', 'Bathrooms', 'Price', 'Year'])
 print(df)
 
-""" 
+
 df.to_csv("clean_summary_df.csv", encoding='utf-8')
 
 with open("clean_summary.csv", "a", encoding='utf-8') as txt_file:
     for line in clean_list:
-        txt_file.write(" ".join(line) + "\n") """
+        txt_file.write(" ".join(line) + "\n")
