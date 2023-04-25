@@ -12,20 +12,13 @@ clean_list = []
 
 for line in df_arrays:
     line = line.split()
-    list_values = []
-    city = ""
-    price = ""
-    bath = ""
-    bed = ""
-    rooms = ""
-    value = ""
-    sqft = ""
+    list_values, city, value, sqft, bath, bed, rooms,  price  = [], "", "", 0, 0, 0, 0, 0
 
     if "Montréal" in line:
         i = 0
         while line[i][0] != "$":
             i += 1
-        price = line[i][1:]
+        price = int(line[i][1:].replace(",", ""))
     else:
         continue
     
@@ -38,10 +31,10 @@ for line in df_arrays:
         if len(line[size + 1]) == 4:
             year = line[size + 1]
         else:
-            year = "None"
+            year = 0
     else:
-        sqft = "None"
-        year = "None"
+        sqft = 0
+        year = 0
 
     # Room details
     if "bathroom" in line:
@@ -49,19 +42,19 @@ for line in df_arrays:
     elif "bathrooms" in line:
         bath = line[line.index("bathrooms") - 1]
     else:
-        bath = "None"
+        bath = 0
 
     if "bedrooms" in line:
         bed = line[line.index("bedrooms") - 1]
     elif "bedroom" in line:
         bed = line[line.index("bedroom") - 1]
     else:
-        bed = "None"
+        bed = 0
 
     if "rooms" in line:
         rooms = line[line.index("rooms") - 1]
     else:
-        rooms = "None"
+        rooms = 0
 
     # City 
     if "Montréal" in line:
@@ -90,11 +83,7 @@ for line in df_arrays:
     clean_list.append(list_values)
 
 df = pd.DataFrame(clean_list, columns = ['City', 'Rooms','Bedrooms', 'Bathrooms', 'Price', 'Year'])
+
 print(df)
 
-
-df.to_csv("clean_summary_df.csv", encoding='utf-8')
-
-with open("clean_summary.csv", "a", encoding='utf-8') as txt_file:
-    for line in clean_list:
-        txt_file.write(" ".join(line) + "\n")
+df.to_csv("snow_data3.csv", encoding='utf-8')
