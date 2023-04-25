@@ -1,4 +1,5 @@
 import pyspark
+import numpy as np
 import pandas as pd
 from pyspark.sql import SparkSession
 
@@ -43,23 +44,21 @@ for line in df_string:
 
     # Room details
     if "bathroom" in line:
-        bath = line[line.index("bathroom") - 1] + " bathroom"
+        bath = line[line.index("bathroom") - 1]
     elif "bathrooms" in line:
-        bath = line[line.index("bathrooms") + 1]
-        if bath != "and":
-            bath += " bathrooms"
+        bath = line[line.index("bathrooms") - 1]
     else:
         bath = "None"
 
     if "bedrooms" in line:
-        bed = line[line.index("bedrooms") - 1] + " bedrooms"
+        bed = line[line.index("bedrooms") - 1]
     elif "bedroom" in line:
-        bed = line[line.index("bedroom") - 1] + " bedroom"
+        bed = line[line.index("bedroom") - 1]
     else:
         bed = "None"
 
     if "rooms" in line:
-        rooms = line[line.index("rooms") - 1] + " rooms"
+        rooms = line[line.index("rooms") - 1]
     else:
         rooms = "None"
 
@@ -88,5 +87,9 @@ for line in df_string:
     list_values.append(price)
     list_values.append(year)
     clean_list.append(list_values)
+
+with open("clean_summary.csv", "a", encoding='utf-8') as txt_file:
+    for line in clean_list:
+        txt_file.write(" ".join(line) + "\n")
 
 print(clean_list)
