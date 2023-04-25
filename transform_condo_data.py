@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 
 pd.options.display.max_rows = 9999
 
-df = pd.read_csv('summary_data.csv', sep='delimiter', header=None, engine='python')
+df = pd.read_csv('Outputs/dirty_data.csv', sep='delimiter', header=None, engine='python')
 
 df_string = df[0]
 
@@ -27,7 +27,9 @@ for line in df_string:
         while line[i][0] != "$":
             i += 1
         price = line[i][1:]
-
+    else:
+        continue
+    
     # Sqft of property
     if "sqft" in line:
         size = line.index("sqft")
@@ -88,8 +90,12 @@ for line in df_string:
     list_values.append(year)
     clean_list.append(list_values)
 
+df = pd.DataFrame(clean_list, columns = ['City', 'Rooms','Bedrooms', 'Bathrooms', 'Price', 'Year'])
+print(df)
+
+""" 
+df.to_csv("clean_summary_df.csv", encoding='utf-8')
+
 with open("clean_summary.csv", "a", encoding='utf-8') as txt_file:
     for line in clean_list:
-        txt_file.write(" ".join(line) + "\n")
-
-print(clean_list)
+        txt_file.write(" ".join(line) + "\n") """
