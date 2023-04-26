@@ -2,6 +2,9 @@ import pyspark
 import numpy as np
 import pandas as pd
 from pyspark.sql import SparkSession
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 pd.options.display.max_rows = 9999
 
@@ -51,7 +54,7 @@ for line in df_arrays:
     else:
         bed = 0
 
-    if "rooms" in line:
+    if "rooms" in line and "powder" not in line:
         rooms = line[line.index("rooms") - 1]
     else:
         rooms = 0
@@ -86,4 +89,4 @@ df = pd.DataFrame(clean_list, columns = ['City', 'Rooms','Bedrooms', 'Bathrooms'
 
 print(df)
 
-df.to_csv("snow_data3.csv", encoding='utf-8')
+#df.to_csv("snow_data4.csv", encoding='utf-8', index=False)

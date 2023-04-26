@@ -5,6 +5,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
 import time
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def read_page_row(response):
     soup = BeautifulSoup(response, "html.parser")
@@ -46,7 +49,7 @@ option_argument.add_experimental_option('excludeSwitches', ['enable-logging'])
 driver = webdriver.Chrome(options = option_argument)
 driver.get('https://www.centris.ca/en/condos~for-sale~montreal-verdun-ile-des-soeurs/20598619?view=Summary')
 
-print(read_page_row(driver.page_source))
+logging(read_page_row(driver.page_source))
 
 data = []
 iterations = 0
@@ -80,10 +83,10 @@ while limit < 4534:
         time.sleep(10)
     
     limit += 1
-    print(limit) 
+    logging(limit) 
 
 with open("summary_data.csv", "a", encoding='utf-8') as txt_file:
         for line in data:
             txt_file.write(" ".join(line) + "\n")
 
-print(data, len(data), limit)
+logging(data, len(data), limit)
