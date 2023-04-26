@@ -28,8 +28,7 @@ for line in df_arrays:
     # Sqft of property
     if "sqft" in line:
         size = line.index("sqft")
-
-        sqft = line[size - 1]
+        sqft = int(line[size - 1].replace(",", ""))
 
         if len(line[size + 1]) == 4:
             year = line[size + 1]
@@ -82,11 +81,12 @@ for line in df_arrays:
     list_values.append(bed)
     list_values.append(bath)
     list_values.append(price)
+    list_values.append(sqft)
     list_values.append(year)
     clean_list.append(list_values)
 
-df = pd.DataFrame(clean_list, columns = ['City', 'Rooms','Bedrooms', 'Bathrooms', 'Price', 'Year'])
+df = pd.DataFrame(clean_list, columns = ['City', 'Rooms','Bedrooms', 'Bathrooms', 'Price', 'Sqft', 'Year'])
 
 print(df)
 
-#df.to_csv("snow_data4.csv", encoding='utf-8', index=False)
+#df.to_csv("snow_data.csv", encoding='utf-8', index=False)
