@@ -1,6 +1,7 @@
 from pyspark.sql.functions import round
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import avg
+import matplotlib.pyplot as plt
 
 # Create a SparkSession object
 spark = SparkSession.builder.appName("CSV Data").getOrCreate()
@@ -17,8 +18,7 @@ df = df.withColumnRenamed("_c0", "Neighborhood") \
        .withColumnRenamed("_c5", "Sqft") \
        .withColumnRenamed("_c6", "Year")
 
-# Show the first 5 rows of the DataFrame
-df.show(1)
+df.show()
 
 # Group the "Rooms" column and compute the average "Price" for each group
 avg_price_df = df.groupBy("Year").avg("Price")
